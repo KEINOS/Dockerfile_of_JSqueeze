@@ -25,7 +25,7 @@ For more detaild usage and information see:
 HELP;
 
 $options_available = [
-    'c:', 'h', 'v',
+    'c:', 'h', 'v', 't',
     'code:',
     'help',
     'version',
@@ -158,7 +158,7 @@ function is_arg_code()
 {
     $options = get_arg_options();
 
-    return (isset($options['c']) || isset($option['code']));
+    return (isset($options['c']) || isset($options['code']));
 }
 
 function is_arg_empty()
@@ -172,21 +172,21 @@ function is_arg_help()
 {
     $options = get_arg_options();
 
-    return (isset($options['h']) || isset($option['help']));
+    return (isset($options['h']) || isset($options['help']));
 }
 
 function is_arg_test()
 {
     $options = get_arg_options();
 
-    return (isset($options['t']) || isset($option['test']));
+    return (isset($options['t']) || isset($options['test']));
 }
 
 function is_arg_version()
 {
     $options = get_arg_options();
 
-    return (isset($options['v']) || isset($option['version']));
+    return (isset($options['v']) || isset($options['version']));
 }
 
 function is_code_stdin(){
