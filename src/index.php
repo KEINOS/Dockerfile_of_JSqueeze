@@ -49,24 +49,11 @@ switch (true) {
         set_fatcode(file_get_contents('php://stdin'));
         break;
     case is_arg_code():
-        set_fatcode(get_fatcode_arg());
+        set_fatcode(get_arg_code());
         break;
     default:
         print_help('Unknown option given');
         exit(FAILURE);
-}
-
-function get_fatcode_arg(){
-    $options = get_arg_options();
-    if(isset($options['c'])){
-        return $options['c'];
-    }
-
-    if(isset($options['code'])){
-        return $options['ccode'];
-    }
-
-    return false;
 }
 
 $jz = new \Patchwork\JSqueeze();
@@ -93,19 +80,34 @@ function echo_error($message)
     echo $message . PHP_EOL;
 }
 
-function get_arg_options(){
+function get_arg_code()
+{
+    $options = get_arg_options();
+    if (isset($options['c'])) {
+        return $options['c'];
+    }
+
+    if (isset($options['code'])) {
+        return $options['ccode'];
+    }
+
+    return false;
+}
+
+function get_arg_options()
+{
     global $options_available;
     static $option_result;
 
-    if (isset($option_result)){
+    if (isset($option_result)) {
         return $option_result;
     }
 
     $options_short = '';
 
-    foreach($options_available as $option){
+    foreach ($options_available as $option) {
         $option = trim($option);
-        if(1 === strlen(trim($option, ':'))){
+        if (1 === strlen(trim($option, ':'))) {
             $options_short .= $option;
             continue;
         }
@@ -125,7 +127,7 @@ function get_fatcode()
 
 function get_fatcode_sample()
 {
-    $path_file_sample='./sample.js';
+    $path_file_sample = './sample.js';
 
     if (! file_exists($path_file_sample)) {
         echo_error('Sample file not found.');
@@ -189,12 +191,13 @@ function is_arg_version()
     return (isset($options['v']) || isset($options['version']));
 }
 
-function is_code_stdin(){
+function is_code_stdin()
+{
     global $argv;
 
-    foreach($argv as $arg){
+    foreach ($argv as $arg) {
         $arg = trim($arg);
-        if( '.' === $arg){
+        if ('.' === $arg) {
             return true;
         }
     }
@@ -207,7 +210,7 @@ function print_help($msg_additional='')
 
     $msg_additional = trim($msg_additional);
 
-    if(! empty($msg_additional)){
+    if (! empty($msg_additional)) {
         $header = '* ';
         $len_underline = strlen($msg_additional);
         $len_header    = strlen($header);
