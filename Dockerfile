@@ -39,4 +39,3 @@ COPY --from=src /app-release.php.inc  /app/app-release.php.inc
 WORKDIR /app
 
 ENTRYPOINT [ "php", "/app/index.php"]
-CMD [ "--version" ]

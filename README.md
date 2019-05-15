@@ -1,3 +1,5 @@
+[![](https://images.microbadger.com/badges/image/keinos/jsqueeze.svg)](https://microbadger.com/images/keinos/jsqueeze "View image info on microbadger.com") [![](https://img.shields.io/docker/cloud/automated/keinos/jsqueeze.svg)](https://hub.docker.com/r/keinos/jsqueeze "View on Docker Hub") [![](https://img.shields.io/docker/cloud/build/keinos/jsqueeze.svg)](https://hub.docker.com/r/keinos/jsqueeze/builds "View Build Status on Docker Hub")
+
 # Dockerfile of JSqueeze
 
 A docker container that shrinks / compresses / minifies / mangles Javascript code.
@@ -11,48 +13,72 @@ docker pull keinos/jsqueeze:latest
 - Reporitories:
   - Image: https://hub.docker.com/r/keinos/jsqueeze @ Docker Hub
   - Source: https://github.com/KEINOS/Dockerfile_of_JSqueeze @ GitHub
-- Base Image: `keinos/mini-php7:latest`
+    - Note: The branch "`dockerfile`" is the main branch and "`master`" branch is the "JSqueeze" forked source code.
+- Base Image: `keinos/alpine:latest` [[See more image info](https://microbadger.com/images/keinos/jsqueeze)]
 - Issues: https://github.com/KEINOS/Dockerfile_of_JSqueeze/issues @ GitHub
 
 ## Usage
 
-```shellsession
+- Basic syntax
 
-```
+    ```bash
+    docker run --rm keinos/jsqueeze [OPTIONS]
+    ```
+
+- Via STDIN
+
+    ```shellsession
+    $ # Provide Javascript through STDIN with '.' option.
+    $ # Note that you need an -i/--interactive option of docker run.
+    $ cat ./fat_js_code.js | docker run --rm -i keinos/jsqueeze .
+    ...
+    ```
+
+- Via argument
+
+    ```shellsession
+    $ # Provide Javascript as a arg value
+    $ docker run --rm -i keinos/jsqueeze -c="{'some':'fat js code'}"
+    ...
+    ```
+
+    ```shellsession
+    $ # Provide Javascript as a arg value via variable.
+    $ # Note that the $str_sample variable is given by quotation.
+    $ str_sample=$(cat ./fat_js_code.js)
+    $ docker run --rm -v $(pwd)/src/index.php:/app/index.php test -c "$str_sample"
+    ...
+    ```
+
+- Help
+
+    ```shellsession
+    $ # View help
+    $ docker run --rm keinos/jsqueeze --help
+    ...
+    ```
+
+- Version
+
+    ```shellsession
+    $ # View version info
+    $ docker run --rm keinos/jsqueeze --version
+    ...
+    ```
+
+- Run the built-in simple test
+
+    ```shellsession
+    $ docker run --rm keinos/jsqueeze --test
+    ;if('this_is'==/an_example/){of_jsueeze()}
+    else{var a=b?(c%d):e[f]};
+    ```
 
 ## Features
 
-- Removes comments and white spaces.
-- Renames every local vars, typically to a single character.
-- Keep Microsoft's conditional comments.
-- In order to maximise later HTTP compression (deflate, gzip), new variables
-  names are choosen by considering closures, variables' frequency and
-  characters' frequency.
-- Can rename also global vars, methods and properties, but only if they are marked
-  special by some naming convention. Use JSqueeze::SPECIAL_VAR_PACKER to rename vars
-  whose name begins with one or more `$` or with a single `_`.
-- Renames also local/global vars found in strings, but only if they are marked
-  special.
-- If you use `with/eval` then be careful.
+- See: ["JSqueeze" document](https://github.com/tchwork/jsqueeze) @ GitHub
 
-Bonus
------
+## License
 
-* Replaces `false/true` by `!1/!0`
-* Replaces `new Array/Object` by `[]/{}`
-* Merges consecutive `var` declarations with commas
-* Merges consecutive concatened strings
-* Can replace optional semi-colons by line feeds, thus facilitating output
-  debugging.
-* Keep important comments marked with `/*!...`
-* Treats three semi-colons `;;;` [like single-line comments](http://dean.edwards.name/packer/2/usage/#triple-semi-colon).
-* Fix special catch scope across browsers
-* Work around buggy-handling of named function expressions in IE<=8
-
-License
--------
-
-This library is free software; you can redistribute it and/or modify it
-under the terms of the (at your option):
-Apache License v2.0 (see provided LICENCE.ASL20 file), or
-GNU General Public License v2.0 (see provided LICENCE.GPLv2 file).
+- GNU General Public License v2.0 (see provided LICENCE.GPLv2 file).
+- See: [LICENSE](https://github.com/KEINOS/Dockerfile_of_JSqueeze/blob/dockerfile/LICENSE)
