@@ -76,9 +76,8 @@ docker pull keinos/jsqueeze:latest
 
 ## Features
 
-- See: ["JSqueeze" document](https://github.com/tchwork/jsqueeze) @ GitHub
+- See: ["JSqueeze" document](https://github.com/tchwork/jsqueeze#features) @ GitHub
 
 ## License
 
-- GNU General Public License v2.0 (see provided LICENCE.GPLv2 file).
-- See: [LICENSE](https://github.com/KEINOS/Dockerfile_of_JSqueeze/blob/dockerfile/LICENSE)
+- GNU General Public License v2.0 [See [LICENSE](https://github.com/KEINOS/Dockerfile_of_JSqueeze/blob/dockerfile/LICENSE)]
